@@ -4,6 +4,7 @@ from db import db_session_context
 
 DB_NAME = 'news'
 
+
 def find_popular_articles():
     """Find the three most popular articles of all time"""
 
@@ -11,8 +12,7 @@ def find_popular_articles():
 
     with db_session_context(DB_NAME) as db:
         cursor = db.cursor()
-        cursor.execute(
-        """
+        cursor.execute("""
             SELECT articles.title, count(log.status) as count
             FROM articles, log
             WHERE log.status = '200 OK'
@@ -27,6 +27,7 @@ def find_popular_articles():
     for article in results:
         print "%s -- %s views" % (article[0], article[1])
 
+
 def find_popular_authors():
     """Find the three most popular authors of all time"""
 
@@ -34,8 +35,7 @@ def find_popular_authors():
 
     with db_session_context(DB_NAME) as db:
         cursor = db.cursor()
-        cursor.execute(
-        """
+        cursor.execute("""
             SELECT authors.name, count(log.status) as count
             FROM authors, articles, log
             WHERE articles.author = authors.id
@@ -50,6 +50,7 @@ def find_popular_authors():
     for author in results:
         print "%s -- %s views" % (author[0], author[1])
 
+
 def find_most_errors():
     """Find the day that had the highest percentage of 404s"""
 
@@ -57,10 +58,11 @@ def find_most_errors():
 
     with db_session_context(DB_NAME) as db:
         cursor = db.cursor()
-        cursor.execute(
-        """
+        cursor.execute("""
             SELECT to_char(fourohfours.day, 'MM/DD/YYYY'),
-              round((fourohfours.totals*1.0 / request_totals.totals*1.0)*100, 2) as percentage
+              round(
+                (fourohfours.totals*1.0 / request_totals.totals*1.0)*100, 2)
+              as percentage
             FROM fourohfours, request_totals
             WHERE fourohfours.day = request_totals.day
               and (fourohfours.totals*1.0 / request_totals.totals*1.0)*100 > 1
@@ -75,4 +77,3 @@ if __name__ == "__main__":
     find_popular_articles()
     find_popular_authors()
     find_most_errors()
-

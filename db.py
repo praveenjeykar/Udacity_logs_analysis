@@ -1,6 +1,7 @@
 from contextlib import contextmanager
 import psycopg2
 
+
 @contextmanager
 def db_session_context(db_name):
     """
