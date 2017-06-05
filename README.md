@@ -29,12 +29,31 @@ CREATE view request_totals as
 ```
 - Provided the above views are created, you should be able to run the reporting tool as:
 ```bash
-python <tool name here>
+python reporter.py
 ```
 - Win!
 
 ## What's what
 The repo has only a few files:
 
-- `<TOOL NAME>`: this is the main entrypoint for the application
+- `reporter.py`: this is the main entrypoint for the application
 - `db.py`: this encapsulates the database connection logic
+
+## Example output
+```bash
+--- Three most popular articles of all time ---
+Candidate is jerk, alleges rival -- 338647 views
+Bears love berries, alleges bear -- 253801 views
+Bad things gone, say good people -- 170098 views
+
+
+--- Most popular authors of all time ---
+Ursula La Multa -- 507594 views
+Rudolf von Treppenwitz -- 423457 views
+Anonymous Contributor -- 170098 views
+Markoff Chaney -- 84557 views
+
+
+--- More than 1% of requests lead to errors ---
+07/17/2016 -- 2.26%
+```
